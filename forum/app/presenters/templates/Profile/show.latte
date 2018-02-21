@@ -1,0 +1,29 @@
+{block title}
+    {$shownUser->username}
+{/block}
+{block content}
+<div class="card mt-5 mx-auto" style="max-width: 30rem;">
+    <div class="card-body">
+        <img src="{$basePath}/{$shownUser->picture}" class="rounded mx-auto d-block mb-3" style="max-height: 15em; max-width: 15em;">
+        <dl class="row">
+            <dt class="col-lg-5">Uživatelské jméno:</dt>
+            <dd class="col-lg-7 text-right">{$shownUser->username}</dd>
+
+            <dt class="col-sm-5">Jméno:</dt>
+            <dd class="col-sm-7 text-right">{$shownUser->forename}</dd>
+
+            <dt class="col-sm-5">Příjmení:</dt>
+            <dd class="col-sm-7 text-right">{$shownUser->surname}</dd>
+
+            <dt class="col-sm-5">E-mail:</dt>
+            <dd class="col-sm-7 text-right">{$shownUser->email}</dd>
+
+            <dt class="col-sm-5">Role:</dt>
+            <dd class="col-sm-7 text-right">{$shownUser->role}</dd>
+        </dl>
+        <a n:href="Posts:my 'id' => $shownUser->id">Moje příspěvky</a>
+        {if $user->isInRole('admin') || $shownUser->id == $user->id}
+            <a n:href="Profile:edit 'id' => $shownUser->id, 'backlink' => $presenter->storeRequest()" class="btn btn-outline-secondary btn-sm float-right" role="button" aria-pressed="true">Upravit</a>
+        {/if}
+    </div>
+</div>

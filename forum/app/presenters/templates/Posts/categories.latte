@@ -1,0 +1,52 @@
+{block title}
+    Kategorie
+{/block}
+{block content}
+{foreach $categories as $category}
+    <h4><a style="color: #343a40" n:href="Posts:category 'id' => $category['db']->id">Kategorie: {$category['db']->name}</a></h4>
+    {if $category['postsCount'] == 0}
+        <div class="row" style="min-height: 48px; margin-bottom: 48px; border-top: 1px solid rgba(0,0,0,0.15); margin-left: 2px; margin-right: 2px;">
+            <div class="col-12" style="padding-left: 2px;">
+                V této kategorii nejsou žádné příspěvky.
+            </div>
+        </div>
+        {else}
+        <div class="row" style="align-items: center; min-height: 48px; border-top: 1px solid rgba(0,0,0,.15); margin-left: 2px; margin-right: 2px;">
+            <div class="col-3" style="padding-left: 3px;">
+                <b>Autor</b>
+            </div>
+            <div class="col-6" style="padding: 0;">
+                <b>Název příspěvku</b>
+            </div>
+            <div class="col-3" style="text-align: right; padding-right: 3px;">
+                <b>Poslední změna</b>
+            </div>
+        </div>
+    {/if}
+    {foreach $category['posts'] as $post}
+        {if $iterator->odd}
+            <div class="row" style="background: rgba(0,0,0,.05); align-items: center; min-height: 48px; word-wrap: break-word;  border-top: 1px solid rgba(0,0,0,.15); margin-left: 2px; margin-right: 2px;">
+            {else}
+                <div class="row" style="align-items: center; min-height: 48px; word-wrap: break-word;  border-top: 1px solid rgba(0,0,0,.15); margin-left: 2px; margin-right: 2px;">
+        {/if}
+        <div class="col-3" style="padding-left: 3px;">
+            <a style="color: black" n:href= "Profile:show 'id' => $post['db']->author_id">{$post['db']->author}</a>
+        </div>
+        <div class="col-6" style="padding: 0;">
+            <a style="color: black" n:href="Posts:post 'id' => $post['db']->id">{$post['db']->title}</a>
+        </div>
+        <div class="col-3" style="text-align: right; padding-right: 3px;">
+            {$post['db']->updated|date:'j. n. Y'}
+        </div>
+        </div>
+        {if $iterator->last}
+            <div class="row" style="text-align: center; min-height: 48px; border-top: 1px solid rgba(0,0,0,.15); margin-left: 2px; margin-right: 2px;">
+                <div class="col-12" style="line-height: 48px; margin-bottom: 45px;">
+                    {if $category['postsCount'] > 5}
+                        <b><a style="color: #343a40" n:href="Posts:category 'id' => $category['db']->id">a další ...</a></b>
+                    {/if}
+                </div>
+            </div>
+        {/if}
+    {/foreach}
+{/foreach}

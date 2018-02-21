@@ -1,0 +1,37 @@
+{block title}
+    {if $author->username == $user->getIdentity()->username}
+        Moje příspěvky
+        {else}
+        Příspěvky od {$author->username}
+    {/if}
+{/block}
+{block content}
+<h2>Příspěvky uživatele <a style="color: black" n:href="Profile:show 'id' => $author->id">{$author->username}</a></h2><br>
+<div class="row" style="align-items: center; min-height: 48px; border-top: 1px solid rgba(0,0,0,.15); margin-left: 2px; margin-right: 2px;">
+    <div class="col-5" style="padding-left: 3px;">
+        <b>Název příspěvku</b>
+    </div>
+    <div class="col-4" style="padding: 0;">
+        <b>Kategorie</b>
+    </div>
+    <div class="col-3" style="text-align: right; padding-right: 3px;">
+        <b>Poslední změna</b>
+    </div>
+</div>
+{foreach $posts as $post}
+    {if $iterator->odd}
+        <div class="row" style="background: rgba(0,0,0,.05); align-items: center; min-height: 48px; word-wrap: break-word;  border-top: 1px solid rgba(0,0,0,.15); margin-left: 2px; margin-right: 2px;">
+    {else}
+        <div class="row" style="align-items: center; min-height: 48px; word-wrap: break-word;  border-top: 1px solid rgba(0,0,0,.15); margin-left: 2px; margin-right: 2px;">
+    {/if}
+    <div class="col-5" style="padding-left: 3px;">
+        <a style="color: black" n:href="Posts:post 'id' => $post['db']->id">{$post['db']->title}</a>
+    </div>
+    <div class="col-4" style="padding: 0;">
+        <a style="color: black" n:href="Posts:category 'id' => $post['category']->id">{$post['category']->name}</a>
+    </div>
+    <div class="col-3" style="text-align: right; padding-right: 3px;">
+        {$post['db']->updated|date:'j. n. Y'}
+    </div>
+    </div>
+{/foreach}

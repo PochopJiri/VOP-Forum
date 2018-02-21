@@ -1,0 +1,25 @@
+{block title}
+    Přidat příspěvek
+{/block}
+{block content}
+<h2>Přidat příspěvek</h2><br>
+<div class="card mx-auto">
+    <div class="card-body">
+        <form n:name="addPost">
+            <div class="form-group col-sm-5">
+                <label n:name="category" for="SelectCategory">Kategorie:</label>
+                <select n:name="category" class="form-control" id="SelectCategory"></select>
+                <div style="color: #868e96;">Nevyhovuje Vám žádná z kategorií? <a n:href="Posts:createCategory">Založte novou</a>!</div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label n:name="title" for="InputTitle">Titulek:</label>
+                <input n:name="title" type="text" class="form-control" id="InputTitle" placeholder="Zadejte titulek">
+            </div>
+            <div class="form-group col-sm-12">
+                <label n:name="content" for="InputContent">Obsah:</label>
+                <textarea n:name="content" type="text" style="min-height: 250px;" class="form-control" id="InputContent" placeholder="Zadejte obsah"></textarea>
+            </div>
+            <button n:name="add" type="submit" style="float: right;" class="btn btn-primary mb-3 mr-3">Přidat příspěvek</button>
+        </form>
+    </div>
+</div>

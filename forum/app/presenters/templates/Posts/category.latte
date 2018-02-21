@@ -1,0 +1,55 @@
+{block title}
+    {$category->name}
+{/block}
+{block content}
+<h4 style="display: inline-block;">{$category->name}</h4>
+{if $editRights}
+<button type="button" class="btn btn-sm btn-danger" style="float: right;" data-toggle="modal" data-target="#confirmModal">Smazat</button>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Smazat kategorii</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Opravdu si přejete smazat tuto kategorii a všechny příspěvky v ní obsažené?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                <a n:href="Posts:deleteCategory 'id' => $category->id" class="btn btn-danger">Smazat</a>
+            </div>
+        </div>
+    </div>
+</div>
+{/if}
+<div class="row" style="align-items: center; min-height: 48px; border-top: 1px solid rgba(0,0,0,.15); margin-left: 2px; margin-right: 2px;">
+    <div class="col-3" style="padding-left: 3px;">
+        <b>Autor</b>
+    </div>
+    <div class="col-6" style="padding: 0;">
+        <b>Název příspěvku</b>
+    </div>
+    <div class="col-3" style="text-align: right; padding-right: 3px;">
+        <b>Poslední změna</b>
+    </div>
+</div>
+{foreach $posts as $post}
+    {if $iterator->odd}
+        <div class="row" style="background: rgba(0,0,0,.05); align-items: center; min-height: 48px; word-wrap: break-word;  border-top: 1px solid rgba(0,0,0,.15); margin-left: 2px; margin-right: 2px;">
+    {else}
+        <div class="row" style="align-items: center; min-height: 48px; word-wrap: break-word;  border-top: 1px solid rgba(0,0,0,.15); margin-left: 2px; margin-right: 2px;">
+    {/if}
+    <div class="col-3" style="padding-left: 3px;">
+        <a style="color: black" n:href= "Profile:show 'id' => $post->author_id">{$post->author}</a>
+    </div>
+    <div class="col-6" style="padding: 0;">
+        <a style="color: black" n:href="Posts:post 'id' => $post->id">{$post->title}</a>
+    </div>
+    <div class="col-3" style="text-align: right; padding-right: 3px;">
+        {$post->updated|date:'j. n. Y'}
+    </div>
+    </div>
+{/foreach}

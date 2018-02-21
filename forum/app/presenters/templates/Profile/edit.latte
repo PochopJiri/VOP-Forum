@@ -1,0 +1,50 @@
+{block title}
+    Upravit profil
+{/block}
+{block content}
+<div class="card mt-5 mx-auto" style="max-width: 30rem;">
+    <div class="card-body">
+        <img src="{$basePath}/{$shownUser->picture}" class="rounded mx-auto d-block mb-3" style="max-height: 15em; max-width: 15em;">
+        <form n:name="editUserForm">
+            <dl class="row">
+                <dt class="col-lg-5">Uživatelské jméno:</dt>
+                <dd class="col-sm-7">
+                    <div class="form-group">
+                        <input n:name="username" type="text" class="form-control" id="InputUsername" value="{$shownUser->username}">
+                    </div>
+                </dd>
+                <dt class="col-sm-5">Jméno:</dt>
+                <dd class="col-sm-7">
+                    <div class="form-group">
+                        <input n:name="forename" type="text" class="form-control" id="InputForename" value="{$shownUser->forename}">
+                    </div>
+                </dd>
+                <dt class="col-sm-5">Příjmení:</dt>
+                <dd class="col-sm-7">
+                    <div class="form-group">
+                        <input n:name="surname" type="text" class="form-control" id="InputSurname" value="{$shownUser->surname}">
+                    </div>
+                </dd>
+                <dt class="col-sm-5">E-mail:</dt>
+                <dd class="col-sm-7">
+                    <div class="form-group">
+                        <input n:name="email" type="text" class="form-control" id="InputEmail" value="{$shownUser->email}">
+                    </div>
+                </dd>
+                {if $user->isInRole('admin')}
+                    <dt class="col-sm-5">Role:</dt>
+                    <dd class="col-sm-7 text-right">
+                        <div class="form-group">
+                            <select n:name="role" class="form-control" id="InputRole">
+                            </select>
+                        </div>
+                    </dd>
+                {/if}
+            </dl>
+            <div class="btn-group" style="float: right;" role="group">
+                <a n:href="Profile:show 'id' => $shownUser->id" class="btn btn-secondary">Zpět</a>
+                <button type="submit" class="btn btn-success">Uložit</button>
+            </div>
+        </form>
+    </div>
+</div>

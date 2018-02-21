@@ -1,0 +1,6 @@
+database:
+    dsn: 'mysql:host=localhost;dbname=forumg6'
+    user: root
+    password: rootroot
+    options:
+        lazy: yes

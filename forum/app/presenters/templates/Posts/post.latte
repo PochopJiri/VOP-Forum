@@ -1,0 +1,64 @@
+{block title}
+    {$post->title}
+{/block}
+{block content}
+<h2 style="display: inline-block;">{$post->title}</h2>
+{if $editRights}
+    <div class="btn-group" style="float: right;" role="group">
+        <a n:href="Posts:edit 'id' => $post->id" class="btn btn-sm btn-secondary">Upravit</a>
+        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deletePost">Smazat</button>
+    </div>
+<div class="modal fade" id="deletePost" tabindex="-1" role="dialog" aria-labelledby="deletePost" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Smazat příspěvek</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Opravdu si přejete smazat tento příspěvek?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                <a n:href="Posts:deletePost 'id' => $post->id" class="btn btn-danger">Smazat</a>
+            </div>
+        </div>
+    </div>
+</div>
+{/if}
+<br>
+Autor: <a style="color: black" n:href="Profile:show 'id' => $author->id">{$author->username}</a><br>
+Kategorie: <a style="color: black" n:href="Posts:category 'id' => $category->id">{$category->name}</a>
+<div style="padding-bottom: 50px; margin-top: 10px; margin-bottom: 10px;">
+{$post->content}<br>
+</div>
+<h4>Komentáře</h4>
+<hr>
+{foreach $comments as $comment}
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-1 col-2">
+            <a n:href="Profile:show 'id' => $comment['author']->id"><img class="rounded img-fluid" style="padding: 1px;" src="{$basePath}/{$comment['author']->picture}" alt="avatar"></a>
+        </div>
+        <div class="col-md-11 col-10" style="padding-left: 0;">
+            <a n:href="Profile:show 'id' => $comment['author']->id">{$comment['author']->username}</a> - {$comment['created']}{$comment['updated']}
+            {if $comment['editRights']}
+                <a href="#">upravit</a> / <a href="#">smazat</a>{**<a n:href="Posts:deleteComment 'id' => $comment['db']->id">smazat</a>*}
+            {/if}
+            <br>
+            {$comment['db']->content}
+        </div>
+    </div>
+{/foreach}
+{if $user->isLoggedIn()}
+    <form n:name=addComment>
+        <div class="form-group">
+            <textarea n:name=text type="text" class="form-control" id="InputUsername" placeholder="Přidejte komentář"></textarea>
+        </div>
+        <button n:name=add type="submit" class="btn btn-primary">Přidat</button>
+    </form>
+{else}
+    Pokud chcete přidávat komentáře, tak se musíte <a n:href="Sign:in 'backlink' => $presenter->storeRequest()">přihlásit</a>.
+{/if}
+
